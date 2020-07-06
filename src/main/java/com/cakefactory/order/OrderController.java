@@ -26,8 +26,8 @@ class OrderController {
     }
 
     @GetMapping
-    ModelAndView order() {
-        return new ModelAndView("order", Map.of("basketTotal", 0));
+    String order() {
+        return "order";
     }
 
     @PostMapping

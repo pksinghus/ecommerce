@@ -3,3 +3,5 @@ spring:
         url: ${db.url:}
         username: ${db.username}
         password: ${db.password}
+    mustache:
+        expose-request-attributes: true
