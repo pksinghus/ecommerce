@@ -6,5 +6,4 @@ CREATE TABLE address (
     email VARCHAR(255) NOT NULL PRIMARY KEY,
     address_line1 VARCHAR(255) NOT NULL,
     address_line2 VARCHAR(255),
-    postcode VARCHAR
-    (10) NOT NULL);
+    postcode VARCHAR(10) NOT NULL);

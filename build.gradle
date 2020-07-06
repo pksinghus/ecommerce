@@ -2,6 +2,7 @@ plugins {
 	id 'org.springframework.boot' version '2.2.5.RELEASE'
 	id 'io.spring.dependency-management' version '1.0.9.RELEASE'
 	id 'java'
+	id 'com.google.cloud.tools.jib' version '2.2.0'
 }
 
 group = 'com.cakefactory'
@@ -11,6 +12,10 @@ configurations {
   compileOnly {
     extendsFrom annotationProcessor
   }
+}
+
+bootJar {
+	exclude('**/application-secrets.yaml')
 }
 
 repositories {
@@ -38,6 +43,11 @@ dependencies {
 	implementation 'org.flywaydb:flyway-core'
 
 	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.springframework.security:spring-security-oauth2-core'
+	implementation 'org.springframework.security:spring-security-oauth2-client'
+	implementation 'org.springframework.security:spring-security-oauth2-jose'
+
+	implementation 'com.paypal.sdk:checkout-sdk:1.0.2'
 
 	runtimeOnly 'org.postgresql:postgresql'
 

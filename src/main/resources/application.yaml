@@ -1,7 +1,24 @@
 spring:
-    datasource:
-        url: ${db.url:}
-        username: ${db.username}
-        password: ${db.password}
-    mustache:
-        expose-request-attributes: true
+  profiles:
+    include:
+      - secrets
+  datasource:
+    url: ${db.url:}
+    username: ${db.username}
+    password: ${db.password}
+  mustache:
+    expose-request-attributes: true
+
+  security:
+    oauth2:
+      client:
+        registration:
+          facebook:
+            client-id: ${facebook.client-id}
+            client-secret: ${facebook.client-secret}
+        provider:
+          facebook:
+            user-name-attribute: email
+
+server:
+  forward-headers-strategy: framework

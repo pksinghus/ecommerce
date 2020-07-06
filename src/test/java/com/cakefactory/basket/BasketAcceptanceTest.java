@@ -36,10 +36,10 @@ public class BasketAcceptanceTest extends AcceptanceTest {
         client.goToHomepage();
         client.clickAddToBasket("Red Velvet");
         client.clickAddToBasket("Red Velvet");
-        client.clickAddToBasket("Baguette");
+        client.clickAddToBasket("Fresh Baguette");
         client.goToBasket();
         client.clickRemoveFromBasket("Red Velvet");
-        client.clickRemoveFromBasket("Baguette");
+        client.clickRemoveFromBasket("Fresh Baguette");
 
         assertThat(client.getBasketItemQtyLabel("Red Velvet")).isEqualTo("1");
         assertThat(client.getBasketItemQtyLabel("Baguette")).isEqualTo("");
@@ -48,12 +48,12 @@ public class BasketAcceptanceTest extends AcceptanceTest {
     @Test
     void completesOrder() {
         client.goToHomepage();
-        client.clickAddToBasket("Baguette");
+        client.clickAddToBasket("Fresh Baguette");
         client.goToBasket();
         client.fillInAddress("High Rd", "East Finchley", "N2 0NW");
         client.completeOrder();
 
-        assertThat(client.pageText()).contains("Your order is now complete");
+        assertThat(client.pageText()).contains("Log in to PayPal");
     }
 
     @Test
