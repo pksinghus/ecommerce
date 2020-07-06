@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import java.util.Collections;
 
@@ -23,6 +24,7 @@ class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http
                 .oauth2Login().loginPage("/login").and()
                 .formLogin().loginPage("/login").and()
+                .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login").and()
                 .authorizeRequests()
                     .antMatchers("/account/**").authenticated()
                     .anyRequest().permitAll();

@@ -51,7 +51,11 @@
                 <a class="nav-link" href="/login" id="current-user">Login</a>
             {{/email}}
           </li>
-
+            <li class="nav-item">
+                {{#email}}
+                    <a class="nav-link" href="/logout" id="current-user">Logout</a>
+                {{/email}}
+            </li>
         </ul>
       </div>
     </div>
