@@ -3,10 +3,15 @@ package com.cakefactory.catalog;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
+import java.io.IOException;
 import java.math.BigDecimal;
+import java.net.MalformedURLException;
 import java.util.Collections;
 
+import com.cakefactory.basket.Basket;
+import com.gargoylesoftware.htmlunit.FailingHttpStatusCodeException;
 import com.gargoylesoftware.htmlunit.WebClient;
+import com.gargoylesoftware.htmlunit.html.DomNode;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 
 import org.hamcrest.Matchers;
@@ -32,6 +37,9 @@ class CatalogControllerTest {
 	@MockBean
 	CatalogService catalogService;
 
+	@MockBean
+	Basket basket;
+
 	@BeforeEach
 	void setUp() {
 		this.webClient = MockMvcWebClientBuilder.mockMvcSetup(mockMvc).build();
@@ -41,7 +49,7 @@ class CatalogControllerTest {
 	@DisplayName("index page returns the landing page")
 	void returnsLandingPage() throws Exception {
 		mockMvc.perform(MockMvcRequestBuilders.get("/")).andExpect(MockMvcResultMatchers.status().isOk())
-			.andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("Cake Factory")));
+				.andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("Cake Factory")));
 	}
 
 	@Test
@@ -52,11 +60,24 @@ class CatalogControllerTest {
 
 		HtmlPage page = webClient.getPage("http://localhost/");
 
-		assertThat(page.querySelectorAll(".item-title")).anyMatch(domElement -> expectedTitle.equals(domElement.asText()));
+		assertThat(page.querySelectorAll(".item-title"))
+				.anyMatch(domElement -> expectedTitle.equals(domElement.asText()));
+	}
+
+	@Test
+	@DisplayName("index page displays number of items in basket")
+	void displaysNumberOfItems() throws FailingHttpStatusCodeException, MalformedURLException, IOException {
+		when(basket.getTotalItems()).thenReturn(3);
+
+		HtmlPage page = webClient.getPage("http://localhost/");
+
+		DomNode totalElement = page.querySelector(".basket-total");
+		assertThat(totalElement).isNotNull();
+		assertThat(totalElement.asText()).isEqualTo("3");
 	}
 
 	private void mockItems(String title, BigDecimal price) {
-		when(catalogService.getItems()).thenReturn(Collections.singletonList(new Item(title, price)));
+		when(catalogService.getItems()).thenReturn(Collections.singletonList(new Item("test", title, price)));
 	}
 
 }

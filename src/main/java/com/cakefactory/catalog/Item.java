@@ -6,6 +6,7 @@ import lombok.Data;
 @Data
 public class Item {
 
+    final private String sku;
     final private String title;
     final private BigDecimal price;
 
