@@ -1,5 +1,13 @@
   <!-- Footer -->
   <footer class="py-5 bg-dark">
+      <div class="container">
+          {{#ip}}
+            <p class="m-0 text-center text-white">IP Address: {{ip}}</p>
+          {{/ip}}
+          {{#az}}
+            <p class="m-0 text-center text-white">Availability Zone: {{az}}</p>
+          {{/az}}
+      </div>
     <div class="container">
       <p class="m-0 text-center text-white">Copyright &copy; Marketplace 2020</p>
     </div>
